@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Submarine Cables</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+    <link href='/css/mapbox-gl.css' rel='stylesheet' />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+    	@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400&subset=latin-ext,latin);
+		body {
+		margin: 0;
+		padding: 0;
+		}
+
+		#map {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+		}
+		.mapboxgl-popup {
+			z-index: 100;
+			max-width: 400px;
+			font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+			color: #999999;
+		}
+
+		.map-overlay {
+			font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+			position: absolute;
+			color: #999999;
+			width: 25%;
+			top: 0;
+			left: 0;
+			padding: 10px;
+		}
+		@media only screen and (max-width: 600px) {
+        .map-overlay {width: 95%;}
+        }
+		 
+		.map-overlay .map-overlay-inner {
+			background-color: #00000070;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+			border-radius: 3px;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+		 
+		.map-overlay h2 {
+			line-height: 24px;
+			display: block;
+			margin: 0 0 10px;
+		}
+		 
+		.map-overlay .legend .bar {
+			height: 10px;
+			width: 100%;
+			background: linear-gradient(to right, #fca107, #7f3121);
+		}
+		 
+		.map-overlay input {
+			background-color: transparent;
+			display: inline-block;
+			width: 100%;
+			position: relative;
+			margin: 0;
+			cursor: ew-resize;
+		}
+
+		.range {
+		  -webkit-appearance: none;
+		  -moz-appearance: none;
+		  position: absolute;
+		  left: 50%;
+		  top: 50%;
+		  width: 200px;
+		  margin-top: 10px;
+		  transform: translate(-50%, -50%);
+		}
+
+		input[type=range]::-webkit-slider-runnable-track {
+		  -webkit-appearance: none;
+		  background: rgba(59,173,227,1);
+		  background: -moz-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59,173,227,1)), color-stop(25%, rgba(87,111,230,1)), color-stop(51%, rgba(152,68,183,1)), color-stop(100%, rgba(255,53,127,1)));
+		  background: -webkit-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  background: -o-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  background: -ms-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  background: linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
+		  height: 2px;
+		}
+
+		input[type=range]:focus {
+		  outline: none;
+		}
+
+		input[type=range]::-moz-range-track {
+		  -moz-appearance: none;
+		  background: rgba(59,173,227,1);
+		  background: -moz-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59,173,227,1)), color-stop(25%, rgba(87,111,230,1)), color-stop(51%, rgba(152,68,183,1)), color-stop(100%, rgba(255,53,127,1)));
+		  background: -webkit-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  background: -o-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  background: -ms-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  background: linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+		  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
+		  height: 2px;
+		}
+
+		input[type=range]::-webkit-slider-thumb {
+		  -webkit-appearance: none;
+		  border: 2px solid;
+		  border-radius: 50%;
+		  height: 25px;
+		  width: 25px;
+		  max-width: 80px;
+		  position: relative;
+		  bottom: 11px;
+		  background-color: #1d1c25;
+		  cursor: -webkit-grab;
+
+		  -webkit-transition: border 1000ms ease;
+		  transition: border 1000ms ease;
+		}
+
+		input[type=range]::-moz-range-thumb {
+		  -moz-appearance: none;
+		  border: 2px solid;
+		  border-radius: 50%;
+		  height: 25px;
+		  width: 25px;
+		  max-width: 80px;
+		  position: relative;
+		  bottom: 11px;
+		  background-color: #1d1c25;
+		  cursor: -moz-grab;
+		  -moz-transition: border 1000ms ease;
+		  transition: border 1000ms ease;
+		}
+
+		.range.blue::-webkit-slider-thumb {
+		   border-color: rgb(59,173,227);
+		}
+
+		.range.ltpurple::-webkit-slider-thumb {
+		   border-color: rgb(87,111,230);
+		}
+
+		.range.purple::-webkit-slider-thumb {
+		   border-color: rgb(152,68,183);
+		}
+
+		.range.pink::-webkit-slider-thumb {
+		   border-color: rgb(255,53,127);
+		}
+
+		.range.blue::-moz-range-thumb {
+		   border-color: rgb(59,173,227);
+		}
+
+		.range.ltpurple::-moz-range-thumb {
+		   border-color: rgb(87,111,230);
+		}
+
+		.range.purple::-moz-range-thumb {
+		   border-color: rgb(152,68,183);
+		}
+
+		.range.pink::-moz-range-thumb {
+		   border-color: rgb(255,53,127);
+		}
+
+		input[type=range]::-webkit-slider-thumb:active {
+		  cursor: -webkit-grabbing;
+		}
+
+		input[type=range]::-moz-range-thumb:active {
+		  cursor: -moz-grabbing;
+		}
+		#infos {
+			width: 90%;
+			position: absolute;
+			bottom: 20px;
+			left: 5%;
+			background: transparent;
+			font-weight:140;
+			font-size:1.2em;
+			font-family: 'Lato', sans-serif;
+			color: #f2f2f2;
+		}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="map-overlay top">
+	<div class="map-overlay-inner">		
+		<h2>Submarine Cables by Years</h2>
+		<label id="year"></label>
+		<br>
+		<br>
+		<input id="slider" type="range" min="0" max="37" step="1" value="0" class="range blue"/>
+		<br>
+        <br>
+		<h2 id="cabcount">Cable Count 6</h2>
+		<h2 id="cabsum">Cable Length (km) 343</h2>
+	</div>
+</div>
+<div id="infos">
+    <p id="facts"></p>
+</div>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ibGFicyIsImEiOiJwVlg0cnZnIn0.yhekddtKwZohGoORaWjqIw';
+	var map = new mapboxgl.Map({
+		container: 'map',
+		style: 'mapbox://styles/mapbox/dark-v9',
+		center: [24.429049132958603, 16.201002517364383],
+		zoom: 1.7
+	});
+
+	var years = [
+		1989,
+		1990,
+		1991,
+		1992,
+		1993,
+		1994,
+		1995,
+		1996,
+		1997,
+		1998,
+		1999,
+		2000,
+		2001,
+		2002,
+		2003,
+		2004,
+		2005,
+		2006,
+		2007,
+		2008,
+		2009,
+		2010,
+		2011,
+		2012,
+		2013,
+		2014,
+		2015,
+		2016,
+		2017,
+		2018,
+		2019,
+		2020,
+		2021,
+		2022,
+		2023,
+		2024,
+		2025
+		];
+
+var baseWidth = 10;
+var baseZoom = 5;
+
+function filterBy(year) {
+var filters = ['<=', 'cables_out_year', years[year]];
+map.setFilter('routes', filters);
+document.getElementById('year').textContent = "Year " + years[year];
+}
+
+map.on('load', function () {
+
+d3.json(
+'/submar_cables.geojson',
+function (err, data) {
+if (err) throw err;
+ 
+data.features = data.features.map(function (d) {
+d.properties.cables_out_year;
+return d;
+});
+
+	map.addSource('scables', {
+		type: 'geojson',
+		data: data,
+	});
+
+	map.addLayer({
+		'id': 'routes',
+		'source': 'scables',
+		'type': 'line',
+		'paint': {
+			'line-color': '#007cbf',
+			"line-width": {
+			    "type": "exponential",
+			    "base": 2,
+			    "stops": [
+			        [0, baseWidth * Math.pow(2, (0 - baseZoom))],
+			        [24, baseWidth * Math.pow(2, (24 - baseZoom))]
+			    ]
+			}
+		}
+	}); 
+
+	filterBy(0);
+	 
+	document
+	.getElementById('slider')
+	.addEventListener('input', function (e) {
+	var year = parseInt(e.target.value, 10);
+	filterBy(year);
+    var to = years[year];
+	var allcab = data.features;
+	var props = allcab.filter(function(obj, index){
+    return obj.properties.cables_out_year <= to;
+    });
+    var ccount = props.length;
+    var csum = props.reduce(function(sum, d) {
+	  return sum + d.properties.cables_out_length_km;
+	}, 0);	
+	//var cabsum = parseFloat(csum).toFixed(1);
+	cabsum = parseFloat(csum).toFixed(2);
+    var fcsum = Number(cabsum).toLocaleString('en');    
+    document.getElementById('cabcount').textContent = "Cable Count " + ccount;
+    document.getElementById('cabsum').textContent = "Cable Length (km) " + fcsum;
+	});
+	}
+	);
+
+map.on('click', 'routes', function (e) {
+var description = `<h3>` + e.features[0].properties.cables_out_name + `</h3>` + `<h4>` + `<b>` + `Cable Length [km]: ` + `</b>` + e.features[0].properties.cables_out_length_km + `</h4>` + `<h4>` + `<b>` + `Ready for service [Year]: ` + `</b>` + e.features[0].properties.cables_out_year + `</h4>`+ `</h4>` + `<h4>` + `<b>` + `Owners: ` + `</b>` + e.features[0].properties.cables_out_owners + `</h4>` + `<h4>` + `<b>` + `Webpage: ` + `</b>` + `<a href=` +e.features[0].properties.cables_out_url + ` target='_blank'>` + e.features[0].properties.cables_out_url + `</a>` + `</h4>`+ `<h4>` + `<b>` + `Cable ID: ` + `</b>` + e.features[0].properties.cables_out_cable_id + `</h4>`; 
+
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(description)
+.addTo(map);
+});
+ 
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'routes', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'routes', function () {
+map.getCanvas().style.cursor = '';
+});
+
+});
+
+// slider
+
+var inputRange = document.getElementsByClassName('range')[0],
+    maxValue = 36, // the higher the smoother when dragging
+    speed = 1,
+    currValue, rafID;
+
+// set min/max value
+inputRange.min = 0;
+inputRange.max = maxValue;
+
+// listen for unlock
+function unlockStartHandler() {
+    // clear raf if trying again
+    window.cancelAnimationFrame(rafID);
+    
+    // set to desired value
+    currValue = +this.value;
+}
+
+function unlockEndHandler() {
+    
+    // store current value
+    currValue = +this.value;
+    
+    // determine if we have reached success or not
+    if(currValue >= maxValue) {
+        successHandler();
+    }
+    else {
+        rafID = window.requestAnimationFrame(animateHandler);
+    }
+}
+
+function successHandler() {
+  console.log('Unlocked');
+};
+
+// handle range animation
+function animateHandler() {
+
+    // calculate gradient transition
+    var transX = currValue - maxValue;
+    
+    // update input range
+    inputRange.value = currValue;
+
+    //Change slide thumb color on mouse up
+    if (currValue < 10) {
+        inputRange.classList.remove('ltpurple');
+    }
+    if (currValue < 20) {
+        inputRange.classList.remove('purple');
+    }
+    if (currValue < 30) {
+        inputRange.classList.remove('pink');
+    }
+    
+    // determine if we need to continue
+    if(currValue > -1) {
+      window.requestAnimationFrame(animateHandler);   
+    }
+    
+    // decrement value
+    currValue = currValue - speed;
+}
+
+// move gradient
+inputRange.addEventListener('input', function() {
+    //Change slide thumb color on way up
+    if (this.value > 10) {
+        inputRange.classList.add('ltpurple');
+    }
+    if (this.value > 20) {
+        inputRange.classList.add('purple');
+    }
+    if (this.value > 30) {
+        inputRange.classList.add('pink');
+    }
+
+    //Change slide thumb color on way down
+    if (this.value < 10) {
+        inputRange.classList.remove('ltpurple');
+    }
+    if (this.value < 20) {
+        inputRange.classList.remove('purple');
+    }
+    if (this.value < 30) {
+        inputRange.classList.remove('pink');
+    }
+});
+
+document.getElementById('slider').addEventListener('input', function (e) {
+
+var line = document.getElementById("facts");
+var lfacts = ["Driving distance between Tbilisi and Batumi is 373 km", "The longest distance between Georgian borders is 600 km, from Gantiadi to Dedoplistskaro", "Equator is a specific case of a planetary equator. It is about 40,075 km long, of which 78.8% lies across water and 21.3% over land", "On average, the distance from Earth to the moon is about 384,400 km", "Total length of land borders of 205 countries is 511,375 km. The superlatives are China - 22,147 km, Russia - 20,017 km and Brasil -14,691 km", "The US Veterinarian Ian Covered 1,000,000 kilometres driving distance in 11 years. He averaged his travel at 100,000 km per year, which is roughly 70,000 more per year than the average person", "In the Earth-Sun system the first and second Lagrangian points, which occur some 1,500,000 km from Earth toward and away from the Sun, respectively, are home to satellites"];
+var clen = parseInt(e.target.value, 10);
+
+if (clen == 0 || clen ==1 ) {
+	document.getElementById('facts').textContent = lfacts[0];
+}
+if (clen > 1 && clen <4 ) {
+	document.getElementById('facts').textContent = lfacts[1];
+}
+if (clen > 4 && clen <7 ) {
+	document.getElementById('facts').textContent = lfacts[2];
+}
+if (clen > 7 && clen <11 ) {
+	document.getElementById('facts').textContent = lfacts[3];
+}
+if (clen > 11 && clen < 14) {
+	document.getElementById('facts').textContent = lfacts[4];
+}
+if (clen > 14 && clen < 26) {
+	document.getElementById('facts').textContent = lfacts[5];
+}
+if (clen > 26 && clen < 37) {
+	document.getElementById('facts').textContent = lfacts[6];
+}
+console.log(clen);
+});
+
+</script>
+</body>
+</html>
