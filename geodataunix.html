@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>3d chart Georgia</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.css" rel="stylesheet" /> -->
+    <link href="/css/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js"></script>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+ 		body {
+		margin: 0;
+		padding: 0;
+		}
+
+		#map {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+		}
+        #slide {
+            margin-left: 15px;
+            position: absolute;
+        }
+        #pitch {
+        -webkit-transform:rotate(270deg);
+        -moz-transform:rotate(270deg);
+        -o-transform:rotate(270deg);
+        -ms-transform:rotate(270deg);
+        transform:rotate(270deg);
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<div id="state-legend" class="legend">
+<h4>Internet Penetration of Households</h4>
+<div><span style="background-color: #001433"></span>170%</div>
+<div><span style="background-color: #003d99"></span>100%</div>
+<div><span style="background-color: #0066ff"></span>80%</div>
+<div><span style="background-color: #66a3ff"></span>70%</div>
+<div id="slide">
+<input id="pitch" class="input-range" orient="vertical" type="range" step="5" value="55" min="20" max="80">
+</div>
+<div><span style="background-color: #cccc00"></span>50%</div>
+<div><span style="background-color: #ffff99"></span>30%</div>
+<div><span style="background-color: #ff8080"></span>20%</div>
+<div><span style="background-color: #ff0000"></span>10%</div>
+<div><span style="background-color: #cccccc"></span>0%</div>
+<br>
+<p>Chart View&nbsp;<input type="checkbox" id="chart_view" name="height" value="Chart view"></p>
+</div>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ibGFicyIsImEiOiJwVlg0cnZnIn0.yhekddtKwZohGoORaWjqIw';
+	var map = new mapboxgl.Map({
+		container: 'map',
+		style: 'mapbox://styles/mapbox/dark-v9',
+		center: [43.92695504780742, 42.30006543160406],
+		pitch: 55,
+		zoom: 2,
+		antialias: true
+	});
+
+
+    map.on('load', function () {
+
+        map.flyTo({
+            center: [
+            43.92695504780742,
+            42.00006543160406
+            ],
+            zoom: 7,
+            essential: true // this animation is considered essential with respect to prefers-reduced-motion
+            });
+
+		d3.json(
+		'/data/mapdatafullnew.geojson',
+		function (err, data) {
+		if (err) throw err;
+		 
+		data.features = data.features.map(function (d) {
+		d.properties.altitude;
+		return d;
+		
+		});		
+		
+			map.addSource('polys', {
+				type: 'geojson',
+				data: data,
+			});
+
+			map.addLayer({
+				'id': 'charts',
+				'source': 'polys',
+				'type': 'fill-extrusion',
+				'paint': {
+					'fill-extrusion-base': 0,
+					'fill-extrusion-height': ['get', 'althundred'],
+					'fill-extrusion-color': [
+						'interpolate',
+						['linear'],
+						['get', 'altitude'],
+						0,
+						'#cccccc',
+						10,
+						'#ff0000',
+						20,
+						'#ff8080',
+						30,
+						'#ffff99',
+						50,
+						'#cccc00',
+						70,
+						'#66a3ff',
+						80,
+						'#0066ff',
+						100,
+						'#003d99',
+						170,
+						'#001433'
+						],
+
+			  }
+			}); 
+
+
+       var pois = '/data/points.geojson';
+       map.addSource('center', {
+				type: 'geojson',
+				data: pois,
+			});
+
+
+         map.addLayer({
+			    'id': 'labeltxt',
+			    'type': 'symbol',
+			    'source': 'center',
+			    'layout': {
+                    'text-field': ['format', ['upcase', ['get', 'NAME_2']],
+                         {
+				          "text-font": ["literal", ['Open Sans Semibold', 'Arial Unicode MS Bold']],
+				          "font-scale": 0.7,
+				          'text-offset': [0, 0.6],
+				     }],
+                }
+                });     
+
+		map.on('click', 'charts', function (e) {
+		var description = `<h3>` + e.features[0].properties.NAME_2 + `</h3>` + `<h4>` + `<b>` + `Customers: ` + `</b>` + e.features[0].properties.mapdata_customers_r + `</h4>` + `<h4>` + `<b>` + `Households: ` + `</b>` + e.features[0].properties.mapdata_households_r + `</h4>`+ `</h4>` + `<h4>` + `<b>` + `Ratio: ` + `</b>` + e.features[0].properties.mapdata_ratio_r + `</h4>` + `<h4>` + `<b>` + `Ratio_int: ` + `</b>` + e.features[0].properties.altitude + `</h4>`; 
+
+		new mapboxgl.Popup()
+		.setLngLat(e.lngLat)
+		.setHTML(description)
+		.addTo(map);
+		});
+		 
+		// Change the cursor to a pointer when the mouse is over the places layer.
+		map.on('mouseenter', 'charts', function () {
+		map.getCanvas().style.cursor = 'pointer';
+		});
+		 
+		// Change it back to a pointer when it leaves.
+		map.on('mouseleave', 'charts', function () {
+		map.getCanvas().style.cursor = '';
+		});
+        document.getElementById('chart_view').addEventListener('change', function () {
+        	  if (this.checked) {
+			    map.setPaintProperty('charts', 'fill-extrusion-height', 1000);
+			  } else {
+			    map.setPaintProperty('charts', 'fill-extrusion-height', ['get', 'althundred'],);
+			  }
+		
+		});
+
+        document.getElementById('pitch').addEventListener('input', function (e) {
+            var mappitch = map.setPitch;
+            var clen = parseInt(e.target.value, 10);
+            map.setPitch(clen);
+            console.log(clen);
+        });
+
+        map.addControl(new mapboxgl.NavigationControl());
+    });
+});
+</script>
+</body>
+</html>
