@@ -1,0 +1,941 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Gagra"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          40.255108009685166,
+          43.278219569813125
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Gali"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.58863750998824,
+          42.57069895747735
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Gudauta"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          40.641850937244506,
+          43.14565438831855
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Gulripshi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.302366339164095,
+          42.95870599004652
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Ochamchire"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.48271974816626,
+          42.80045344473562
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Sokhumi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          40.98598744742943,
+          43.06366431234736
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Batumi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.63929017148911,
+          41.61967193272162
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Keda"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.94488650553211,
+          41.60722417845844
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Khulo"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.4107843218623,
+          41.657346377501625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Kobuleti"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.80122270592381,
+          41.75992240286982
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Shuakhevi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.24754789876794,
+          41.62292327189374
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Chokhatauri"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.37810386679328,
+          41.92456159510626
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Lanchkhuti"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.780523494866145,
+          42.07365558192501
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Ozurgeti"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.941797880533116,
+          41.93402750920591
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Bagdati"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.819693547542975,
+          41.9600866264272
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Chiatura"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.26269776291318,
+          42.23329628838433
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Kharagauli"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.25312774511013,
+          41.99216785001602
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Khoni"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.4957746132133,
+          42.36509523686675
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Kutaisi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.702755684076386,
+          42.25048127285272
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Sachkhere"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.51060030537268,
+          42.28430562378258
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Samtredia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.38964191885556,
+          42.137280778323905
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Terjola"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.925178588382785,
+          42.210118248349154
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Tkibuli"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.89015490786015,
+          42.33080792014574
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Tskaltubo"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.64483975365049,
+          42.29746210007441
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Vani"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.60028652615018,
+          41.990404849582255
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Zestaponi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.01722499302456,
+          42.11512989058919
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Akhmeta"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.31507691646994,
+          42.19248665153207
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Dedoplis Tskaro"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          46.202874131023755,
+          41.36748881055819
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Gurjaani"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.73492100101492,
+          41.70588766966815
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Kvareli"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.83397414074747,
+          41.962983893730886
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Lagodekhi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          46.12631464738112,
+          41.820780313931984
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Sagarejo"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.36541250247767,
+          41.67860009977134
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Signagi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.92042339293938,
+          41.502285747993284
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Telavi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.513058983082345,
+          42.01037945809844
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Bolnisi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.529392865239366,
+          41.360360014890446
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Dmanisi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.16320585435437,
+          41.36862169286257
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Gardabani"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.98124951557332,
+          41.621531923644845
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Marneuli"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.80024321684612,
+          41.37101864680854
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Tetri Tskaro"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.45658531380659,
+          41.59886264321792
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Tsalka"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.97139568696666,
+          41.59663193547693
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Akhalgori"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.40848731573581,
+          42.23509666830236
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Dusheti"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.80943180669842,
+          42.279029359092334
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Kazbegi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.49844033017804,
+          42.53748044558485
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Mtskheta"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.74469004688176,
+          41.83823164487215
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Tianeti"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.03440797253341,
+          42.115048962970114
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Ambrolauri"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.122061533220645,
+          42.5428083319413
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Lentekhi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.85858547027701,
+          42.78313183520554
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Oni"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.50790583352907,
+          42.59303427420522
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Tsageri"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.78348163753362,
+          42.583609821270045
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Abasha"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.19726071798855,
+          42.201283727973575
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Chkhorotsku"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.21302342414856,
+          42.59003361788663
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Khobi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.73751243871172,
+          42.249361933398546
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Martvili"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.386932943285125,
+          42.50497928108137
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Mestia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.40790073455326,
+          42.95379412432254
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Senaki"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.07838476175998,
+          42.28424667116835
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Tsalenjikha"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.053748821390094,
+          42.676540183423086
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Zugdidi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.67855648069598,
+          42.399808826014144
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Adigeni"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.704499685421936,
+          41.72817822847291
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Akhalkalaki"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.4625651926934,
+          41.451203648048114
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Akhaltsikhe"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.011586328570765,
+          41.63942883523663
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Aspindza"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.2364284387616,
+          41.50417023982729
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Borjomi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.49846026950412,
+          41.75041614956326
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Ninotsminda"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.68534852057388,
+          41.33526452054683
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Gori"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.09191258211847,
+          42.08429744307334
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Java"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.96379846934691,
+          42.43572852427285
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Kareli"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.80027750618438,
+          42.038038270086304
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Kaspi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.340573534413686,
+          41.85287252590282
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Khashuri"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.606423252417954,
+          41.980503733896285
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Tbilisi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.84357853009435,
+          41.70641622948371
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Poti"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.6859193925664,
+          42.1320809888496
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Rustavi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.01533019067798,
+          41.535593737288124
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME_2": "Khelvachauri"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.6705449979831,
+          41.58142387391026
+        ]
+      }
+    }
+  ]
+}
