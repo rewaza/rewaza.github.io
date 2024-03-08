@@ -541,3 +541,4 @@ function dragElement(elmnt) {
         document.onmousemove = null;
     }
 }
+map.addControl(new mapboxgl.NavigationControl(),'top-left');
