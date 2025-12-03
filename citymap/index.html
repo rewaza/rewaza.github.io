@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Map - Printable Maps</title>
+    
+    <!-- Mapbox GL CSS -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- Mapbox Geocoder CSS -->
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @media print {
+            @page {
+                size: portrait;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Control Panel -->
+    <div class="control-panel">
+        <div class="control-group">
+            <label for="city-search">Search City:</label>
+            <div id="geocoder" class="geocoder"></div>
+        </div>
+        
+        <div class="control-group">
+            <button id="style-btn" class="btn btn-primary">Select Style</button>
+            <div id="style-menu" class="style-menu hidden">
+                <div class="style-option" data-style="mapbox://styles/mapbox/streets-v12">Streets</div>
+                <div class="style-option" data-style="mapbox://styles/mapbox/outdoors-v12">Outdoors</div>
+                <div class="style-option" data-style="mapbox://styles/mapbox/light-v11">Light</div>
+                <div class="style-option" data-style="mapbox://styles/mapbox/dark-v11">Dark</div>
+                <div class="style-option" data-style="mapbox://styles/mapbox/satellite-v9">Satellite</div>
+                <div class="style-option" data-style="mapbox://styles/mapbox/satellite-streets-v12">Satellite Streets</div>
+                <div class="style-option" data-style="mapbox://styles/mapbox/navigation-day-v1">Navigation Day</div>
+                <div class="style-option" data-style="mapbox://styles/mapbox/navigation-night-v1">Navigation Night</div>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <button id="frame-btn" class="btn btn-secondary">Frame Gallery</button>
+            <div id="frame-menu" class="frame-menu hidden">
+                <div class="frame-grid">
+                    <div class="frame-item" data-frame="none">
+                        <div class="frame-preview no-frame">No Frame</div>
+                    </div>
+                    <div class="frame-item" data-frame="minimal">
+                        <div class="frame-preview minimal-frame"></div>
+                    </div>
+                    <div class="frame-item" data-frame="vintage">
+                        <div class="frame-preview vintage-frame"></div>
+                    </div>
+                    <div class="frame-item" data-frame="ornate">
+                        <div class="frame-preview ornate-frame"></div>
+                    </div>
+                    <div class="frame-item" data-frame="modern">
+                        <div class="frame-preview modern-frame"></div>
+                    </div>
+                    <div class="frame-item" data-frame="classic">
+                        <div class="frame-preview classic-frame"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <button id="text-btn" class="btn btn-secondary">Add Text</button>
+        </div>
+        
+        <div class="control-group">
+            <button id="refresh-btn" class="btn btn-secondary">Refresh</button>
+        </div>
+        
+        <div class="control-group">
+            <button id="studio-btn" class="btn btn-info">Studio</button>
+        </div>
+        
+        <div class="control-group">
+            <button id="print-btn" class="btn btn-success">Print / Export</button>
+            <div id="export-menu" class="export-menu hidden">
+                <div class="export-option" data-format="pdf">Export as PDF</div>
+                <div class="export-option" data-format="jpg">Export as JPG</div>
+                <div class="export-option" data-format="png">Export as PNG</div>
+                <div class="export-option" data-format="bmp">Export as BMP</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Studio Mode -->
+    <div id="studio-mode" class="studio-mode hidden">
+        <div class="studio-header">
+            <h2>Studio Mode</h2>
+            <button id="exit-studio-btn" class="btn btn-secondary">Exit Studio</button>
+        </div>
+        <div class="studio-content">
+            <div class="studio-preview">
+                <div id="studio-frame-overlay" class="studio-frame-overlay"></div>
+                <div id="studio-map-container" class="studio-map-container">
+                    <div id="studio-map" class="studio-map"></div>
+                    <div class="map-resize-handle"></div>
+                </div>
+                <div id="studio-city-info" class="studio-city-info">
+                    <div id="studio-city-name" class="studio-text-editable" contenteditable="true" data-type="city-name"></div>
+                    <div id="studio-state-name" class="studio-text-editable" contenteditable="true" data-type="state-name"></div>
+                    <div id="studio-coordinates" class="studio-text-editable" contenteditable="true" data-type="coordinates"></div>
+                </div>
+            </div>
+            <div class="studio-controls">
+                <div class="studio-control-section">
+                    <h3>City Name</h3>
+                    <div class="control-row">
+                        <label>Size:</label>
+                        <input type="range" id="city-size" min="24" max="120" value="72">
+                        <span id="city-size-value">72px</span>
+                    </div>
+                    <div class="control-row">
+                        <label>Font:</label>
+                        <select id="city-font">
+                            <option value="Arial">Arial</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Helvetica">Helvetica</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label>Color:</label>
+                        <input type="color" id="city-color" value="#000000">
+                    </div>
+                </div>
+                
+                <div class="studio-control-section">
+                    <h3>State Name</h3>
+                    <div class="control-row">
+                        <label>Size:</label>
+                        <input type="range" id="state-size" min="16" max="60" value="32">
+                        <span id="state-size-value">32px</span>
+                    </div>
+                    <div class="control-row">
+                        <label>Font:</label>
+                        <select id="state-font">
+                            <option value="Arial">Arial</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Helvetica">Helvetica</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label>Color:</label>
+                        <input type="color" id="state-color" value="#000000">
+                    </div>
+                </div>
+                
+                <div class="studio-control-section">
+                    <h3>Coordinates</h3>
+                    <div class="control-row">
+                        <label>Size:</label>
+                        <input type="range" id="coord-size" min="12" max="40" value="20">
+                        <span id="coord-size-value">20px</span>
+                    </div>
+                    <div class="control-row">
+                        <label>Font:</label>
+                        <select id="coord-font">
+                            <option value="Arial">Arial</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Helvetica">Helvetica</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label>Color:</label>
+                        <input type="color" id="coord-color" value="#000000">
+                    </div>
+                </div>
+                
+                <div class="studio-control-section">
+                    <h3>Frame</h3>
+                    <div class="frame-selector-studio">
+                        <button class="frame-btn-studio" data-frame="none">None</button>
+                        <button class="frame-btn-studio" data-frame="minimal">Minimal</button>
+                        <button class="frame-btn-studio" data-frame="vintage">Vintage</button>
+                        <button class="frame-btn-studio" data-frame="ornate">Ornate</button>
+                        <button class="frame-btn-studio" data-frame="modern">Modern</button>
+                        <button class="frame-btn-studio" data-frame="classic">Classic</button>
+                    </div>
+                </div>
+                
+                <div class="studio-actions">
+                    <button id="studio-save-btn" class="btn btn-success">Save</button>
+                    <button id="studio-print-btn" class="btn btn-primary">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Map Container -->
+    <div id="map" class="map-container"></div>
+    
+    <!-- Printable Container (for export) -->
+    <div id="printable-container" class="printable-container hidden">
+        <div id="printable-content" class="printable-content">
+            <div id="frame-overlay" class="frame-overlay"></div>
+            <div class="printable-map-area">
+                <div id="map-print" class="map-print"></div>
+            </div>
+            <div id="city-info" class="city-info">
+                <div id="city-name" class="city-name"></div>
+                <div id="state-name" class="state-name"></div>
+                <div id="coordinates" class="coordinates"></div>
+            </div>
+            <div id="text-overlay" class="text-overlay"></div>
+        </div>
+    </div>
+    
+    <!-- Text Editor Modal -->
+    <div id="text-editor-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Text</h2>
+            <div class="form-group">
+                <label for="text-input">Text:</label>
+                <input type="text" id="text-input" placeholder="Enter text">
+            </div>
+            <div class="form-group">
+                <label for="text-size">Size:</label>
+                <input type="range" id="text-size" min="12" max="72" value="24">
+                <span id="text-size-value">24px</span>
+            </div>
+            <div class="form-group">
+                <label for="text-color">Color:</label>
+                <input type="color" id="text-color" value="#000000">
+            </div>
+            <div class="form-group">
+                <label for="text-font">Font:</label>
+                <select id="text-font">
+                    <option value="Arial">Arial</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Helvetica">Helvetica</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="text-position-x">Position X:</label>
+                <input type="range" id="text-position-x" min="0" max="100" value="50">
+                <span id="text-position-x-value">50%</span>
+            </div>
+            <div class="form-group">
+                <label for="text-position-y">Position Y:</label>
+                <input type="range" id="text-position-y" min="0" max="100" value="10">
+                <span id="text-position-y-value">10%</span>
+            </div>
+            <button id="add-text-btn" class="btn btn-primary">Add Text</button>
+            <button id="cancel-text-btn" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+    
+    <!-- Mapbox GL JS -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.js'></script>
+    <!-- Mapbox Geocoder -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <!-- html2canvas for export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script src="app.js"></script>
+</body>
+</html>
+
