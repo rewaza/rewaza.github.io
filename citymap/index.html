@@ -21,8 +21,13 @@
     </style>
 </head>
 <body>
+    <!-- Menu Toggle Button -->
+    <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+        <span class="menu-icon">☰</span>
+    </button>
+    
     <!-- Control Panel -->
-    <div class="control-panel">
+    <div class="control-panel" id="control-panel">
         <div class="control-group">
             <label for="city-search">Search City:</label>
             <div id="geocoder" class="geocoder"></div>
@@ -93,10 +98,11 @@
     
     <!-- Studio Mode -->
     <div id="studio-mode" class="studio-mode hidden">
-        <div class="studio-header">
-            <h2>Studio Mode</h2>
-            <button id="exit-studio-btn" class="btn btn-secondary">Exit Studio</button>
-        </div>
+        <!-- Studio Menu Toggle Button -->
+        <button id="studio-menu-toggle" class="menu-toggle studio-menu-toggle" aria-label="Toggle studio menu">
+            <span class="menu-icon">☰</span>
+        </button>
+        
         <div class="studio-content">
             <div class="studio-preview">
                 <div id="studio-frame-overlay" class="studio-frame-overlay"></div>
@@ -110,7 +116,12 @@
                     <div id="studio-coordinates" class="studio-text-editable" contenteditable="true" data-type="coordinates"></div>
                 </div>
             </div>
-            <div class="studio-controls">
+            <div class="studio-controls" id="studio-controls">
+                <div class="studio-control-section studio-header-info">
+                    <h2>Studio Mode</h2>
+                    <p class="studio-description">Edit your map layout, text styles, and frames</p>
+                </div>
+                
                 <div class="studio-control-section">
                     <h3>City Name</h3>
                     <div class="control-row">
@@ -198,6 +209,7 @@
                 <div class="studio-actions">
                     <button id="studio-save-btn" class="btn btn-success">Save</button>
                     <button id="studio-print-btn" class="btn btn-primary">Print</button>
+                    <button id="exit-studio-btn" class="btn btn-secondary">Exit Studio</button>
                 </div>
             </div>
         </div>

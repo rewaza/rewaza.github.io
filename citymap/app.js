@@ -458,6 +458,89 @@ async function exportMap(format) {
     }
 }
 
+// Menu Toggle
+const menuToggle = document.getElementById('menu-toggle');
+const controlPanel = document.getElementById('control-panel');
+let menuOverlay = null;
+
+function createMenuOverlay() {
+    if (!menuOverlay) {
+        menuOverlay = document.createElement('div');
+        menuOverlay.className = 'menu-overlay';
+        menuOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        `;
+        menuOverlay.addEventListener('click', closeMenu);
+        document.body.appendChild(menuOverlay);
+    }
+    return menuOverlay;
+}
+
+function openMenu() {
+    if (window.innerWidth <= 768) {
+        controlPanel.classList.add('open');
+        const overlay = createMenuOverlay();
+        overlay.style.display = 'block';
+    } else {
+        controlPanel.classList.remove('hidden-desktop');
+    }
+    menuToggle.classList.add('active');
+}
+
+function closeMenu() {
+    if (window.innerWidth <= 768) {
+        controlPanel.classList.remove('open');
+        if (menuOverlay) {
+            menuOverlay.style.display = 'none';
+        }
+    } else {
+        controlPanel.classList.add('hidden-desktop');
+    }
+    menuToggle.classList.remove('active');
+}
+
+// Initialize menu toggle after DOM is ready
+if (menuToggle && controlPanel) {
+    menuToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const isMobile = window.innerWidth <= 768;
+        const isOpen = isMobile 
+            ? controlPanel.classList.contains('open')
+            : !controlPanel.classList.contains('hidden-desktop');
+        
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+}
+
+// Close menu when clicking outside on mobile
+document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+        if (!controlPanel.contains(e.target) && !menuToggle.contains(e.target) && controlPanel.classList.contains('open')) {
+            closeMenu();
+        }
+    }
+});
+
+// Close menu on window resize if switching to desktop
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && controlPanel.classList.contains('open')) {
+        closeMenu();
+    }
+});
+
 // Refresh button
 const refreshBtn = document.getElementById('refresh-btn');
 refreshBtn.addEventListener('click', () => {
@@ -566,13 +649,26 @@ function initStudioMode() {
     });
     
     state.studioMap.on('load', () => {
-        updateStudioTexts();
-        applyStudioTextStyles();
+        // Resize map to ensure it renders properly
+        setTimeout(() => {
+            state.studioMap.resize();
+            updateStudioTexts();
+            applyStudioTextStyles();
+        }, 100);
         
         // Update coordinates continuously
         state.studioMap.on('move', () => {
             updateStudioTexts();
         });
+    });
+    
+    // Also resize on window resize
+    window.addEventListener('resize', () => {
+        if (state.studioMap && state.studioMode) {
+            setTimeout(() => {
+                state.studioMap.resize();
+            }, 100);
+        }
     });
     
     // Make map container resizable and draggable
@@ -672,6 +768,7 @@ studioBtn.addEventListener('click', () => {
     
     setTimeout(() => {
         initStudioMode();
+        initStudioMenuToggle();
     }, 100);
 });
 
@@ -680,7 +777,119 @@ exitStudioBtn.addEventListener('click', () => {
     state.studioMode = false;
     studioMode.classList.add('hidden');
     document.body.style.overflow = '';
+    if (state.studioMap) {
+        state.studioMap.remove();
+        state.studioMap = null;
+    }
 });
+
+// Studio Menu Toggle
+function initStudioMenuToggle() {
+    const studioMenuToggle = document.getElementById('studio-menu-toggle');
+    const studioControls = document.getElementById('studio-controls');
+    let studioMenuOverlay = null;
+    
+    function createStudioMenuOverlay() {
+        if (!studioMenuOverlay) {
+            studioMenuOverlay = document.createElement('div');
+            studioMenuOverlay.className = 'studio-menu-overlay';
+            studioMenuOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 2000;
+                display: none;
+            `;
+            studioMenuOverlay.addEventListener('click', closeStudioMenu);
+            document.body.appendChild(studioMenuOverlay);
+        }
+        return studioMenuOverlay;
+    }
+    
+    function openStudioMenu() {
+        if (window.innerWidth <= 768) {
+            studioControls.classList.add('open');
+            const overlay = createStudioMenuOverlay();
+            overlay.style.display = 'block';
+        } else {
+            studioControls.classList.remove('hidden-desktop');
+            // Add margin to preview when menu opens
+            const preview = document.querySelector('.studio-preview');
+            if (preview) {
+                preview.style.marginRight = '350px';
+            }
+            // Resize map after margin change
+            if (state.studioMap) {
+                setTimeout(() => {
+                    state.studioMap.resize();
+                }, 350); // Wait for CSS transition to complete
+            }
+        }
+        studioMenuToggle.classList.add('active');
+    }
+    
+    function closeStudioMenu() {
+        if (window.innerWidth <= 768) {
+            studioControls.classList.remove('open');
+            if (studioMenuOverlay) {
+                studioMenuOverlay.style.display = 'none';
+            }
+        } else {
+            studioControls.classList.add('hidden-desktop');
+            // Remove margin from preview when menu closes
+            const preview = document.querySelector('.studio-preview');
+            if (preview) {
+                preview.style.marginRight = '0';
+            }
+            // Resize map after margin change to fill extended space
+            if (state.studioMap) {
+                setTimeout(() => {
+                    state.studioMap.resize();
+                }, 350); // Wait for CSS transition to complete
+            }
+        }
+        studioMenuToggle.classList.remove('active');
+    }
+    
+    if (studioMenuToggle && studioControls) {
+        studioMenuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const isMobile = window.innerWidth <= 768;
+            const isOpen = isMobile 
+                ? studioControls.classList.contains('open')
+                : !studioControls.classList.contains('hidden-desktop');
+            
+            if (isOpen) {
+                closeStudioMenu();
+            } else {
+                openStudioMenu();
+            }
+        });
+        
+        // Close menu when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && state.studioMode) {
+                if (!studioControls.contains(e.target) && !studioMenuToggle.contains(e.target) && studioControls.classList.contains('open')) {
+                    closeStudioMenu();
+                }
+            }
+        });
+        
+        // Close menu on window resize
+        window.addEventListener('resize', () => {
+            if (state.studioMode) {
+                if (window.innerWidth > 768 && studioControls.classList.contains('open')) {
+                    closeStudioMenu();
+                }
+            }
+        });
+    }
+}
 
 // Studio text controls
 const citySizeSlider = document.getElementById('city-size');
