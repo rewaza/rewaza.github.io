@@ -590,6 +590,7 @@ body {
     padding-bottom: 80px; /* Extra space for zoom controls */
     transition: margin-right 0.3s ease;
     min-height: 0;
+    min-width: 0; /* Important for flexbox shrinking */
     position: relative;
 }
 
@@ -598,16 +599,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
+    /* Size will be set by JS to match scaled canvas dimensions */
+    flex-shrink: 0;
 }
 
 /* The canvas has fixed dimensions matching export size, scaled to fit */
 .studio-canvas {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     background: #faf8f3;
     box-shadow: 0 10px 60px rgba(0, 0, 0, 0.5);
-    transform-origin: center center;
+    transform-origin: top left;
     /* Dimensions set via JavaScript based on poster size */
     width: 800px;
     height: 1200px;
@@ -622,12 +625,7 @@ body {
     .studio-preview-wrapper {
         width: 100%;
         margin-right: 0;
-    }
-    
-    /* Add margin when controls are visible */
-    .studio-controls:not(.hidden-desktop) ~ .studio-preview-wrapper,
-    .studio-content:has(.studio-controls:not(.hidden-desktop)) .studio-preview-wrapper {
-        margin-right: 350px;
+        transition: margin-right 0.3s ease;
     }
 }
 
@@ -1129,18 +1127,6 @@ body {
     
     .studio-controls.hidden-desktop {
         transform: translateX(100%);
-    }
-    
-    .studio-preview-wrapper {
-        width: 100%;
-        margin-right: 0;
-        transition: margin-right 0.3s ease;
-    }
-    
-    /* Add margin when controls are visible */
-    .studio-controls:not(.hidden-desktop) ~ .studio-preview-wrapper,
-    .studio-content:has(.studio-controls:not(.hidden-desktop)) .studio-preview-wrapper {
-        margin-right: 350px;
     }
 }
 
@@ -1719,13 +1705,20 @@ body {
     
     .studio-preview-wrapper {
         padding: 15px;
+        padding-bottom: 70px;
         flex: 1;
-        min-height: 50vh;
+        min-height: 40vh;
+        width: 100%;
+        overflow: auto;
     }
     
     .studio-preview {
-        width: 100%;
-        height: 100%;
+        /* Size set by JS */
+        margin: auto;
+    }
+    
+    .studio-canvas {
+        transform-origin: top left;
     }
     
     .studio-controls {

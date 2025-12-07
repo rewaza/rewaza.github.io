@@ -1074,25 +1074,28 @@ studioBtn.addEventListener('click', () => {
     // Reset zoom level when entering studio
     state.zoomLevel = 1;
     
-    setTimeout(() => {
-        // Initialize canvas first
-        updateStudioCanvas();
-        
-        // Then initialize map and controls
-        initStudioMode();
-        initStudioMenuToggle();
-        initStudioToggles();
-        initZoomControls();
-        initDraggableTexts();
-        updateStudioVisibility();
-        applyBackgroundColor();
-        updatePosterSizeDisplay();
-        
-        // Update canvas again after all elements are initialized
-        setTimeout(() => {
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            // Initialize canvas first
             updateStudioCanvas();
-        }, 200);
-    }, 100);
+            
+            // Then initialize map and controls
+            initStudioMode();
+            initStudioMenuToggle();
+            initStudioToggles();
+            initZoomControls();
+            initDraggableTexts();
+            updateStudioVisibility();
+            applyBackgroundColor();
+            updatePosterSizeDisplay();
+            
+            // Update canvas again after all elements are initialized
+            setTimeout(() => {
+                updateStudioCanvas();
+            }, 300);
+        });
+    });
 });
 
 // Exit studio
@@ -1371,9 +1374,10 @@ function getCanvasDimensions() {
 // Update studio canvas size and scale
 function updateStudioCanvas() {
     const canvas = document.getElementById('studio-canvas');
+    const studioPreview = document.querySelector('.studio-preview');
     const previewWrapper = document.querySelector('.studio-preview-wrapper');
     
-    if (!canvas || !previewWrapper) return;
+    if (!canvas || !previewWrapper || !studioPreview) return;
     
     // Get canvas dimensions based on poster size
     const canvasDims = getCanvasDimensions();
@@ -1384,20 +1388,34 @@ function updateStudioCanvas() {
     
     // Calculate base scale to fit within the preview wrapper
     const wrapperRect = previewWrapper.getBoundingClientRect();
-    const padding = 100; // Padding around the canvas for zoom controls
-    const availableWidth = wrapperRect.width - padding;
-    const availableHeight = wrapperRect.height - padding;
+    
+    // Ensure we have valid dimensions (can be 0 on initial load or during resize)
+    const wrapperWidth = Math.max(wrapperRect.width, 200);
+    const wrapperHeight = Math.max(wrapperRect.height, 200);
+    
+    const padding = 60; // Padding around the canvas
+    const availableWidth = wrapperWidth - padding;
+    const availableHeight = wrapperHeight - padding;
     
     const scaleX = availableWidth / canvasDims.width;
     const scaleY = availableHeight / canvasDims.height;
     const fitScale = Math.min(scaleX, scaleY, 1); // Don't scale up, only down
     
     // Store fit scale for reference
-    state.fitScale = fitScale;
+    state.fitScale = fitScale > 0 ? fitScale : 0.5;
     
     // Apply zoom level to the fit scale
-    const finalScale = fitScale * state.zoomLevel;
+    const finalScale = state.fitScale * state.zoomLevel;
     canvas.style.transform = `scale(${finalScale})`;
+    
+    // Update the preview container size to match scaled canvas
+    // This makes scrolling work correctly
+    const scaledWidth = canvasDims.width * finalScale;
+    const scaledHeight = canvasDims.height * finalScale;
+    studioPreview.style.width = scaledWidth + 'px';
+    studioPreview.style.height = scaledHeight + 'px';
+    studioPreview.style.minWidth = scaledWidth + 'px';
+    studioPreview.style.minHeight = scaledHeight + 'px';
     
     // Apply background color
     canvas.style.backgroundColor = state.backgroundColor;
@@ -2262,7 +2280,19 @@ window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
         if (state.studioMode) {
-            updateStudioCanvas();
+            // Use requestAnimationFrame for smooth resize
+            requestAnimationFrame(() => {
+                updateStudioCanvas();
+            });
         }
-    }, 100);
+    }, 150);
+});
+
+// Handle orientation change on mobile
+window.addEventListener('orientationchange', () => {
+    if (state.studioMode) {
+        setTimeout(() => {
+            updateStudioCanvas();
+        }, 300);
+    }
 });
