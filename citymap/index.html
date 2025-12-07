@@ -9,6 +9,10 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' rel='stylesheet' />
     <!-- Mapbox Geocoder CSS -->
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&family=Montserrat:wght@400;600;700;900&family=Lato:wght@300;400;700&family=Poppins:wght@300;400;600;700&family=Raleway:wght@300;400;600;700&family=Nunito:wght@300;400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Inter:wght@300;400;600;700&family=Quicksand:wght@300;400;600;700&family=Work+Sans:wght@300;400;600&family=Rubik:wght@300;400;600;700&family=Ubuntu:wght@300;400;500;700&family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Anton&family=Impact&family=Bangers&family=Lilita+One&family=Luckiest+Guy&family=Ultra&family=Paytone+One&family=Francois+One&family=Playfair+Display:wght@400;600;700;900&family=Merriweather:wght@300;400;700&family=Lora:wght@400;600;700&family=Libre+Baskerville:wght@400;700&family=Roboto+Slab:wght@300;400;600;700&family=Arvo:wght@400;700&family=Bitter:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Crimson+Text:wght@400;600;700&family=PT+Serif:wght@400;700&family=Pacifico&family=Lobster&family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Caveat:wght@400;600;700&family=Satisfy&family=Cookie&family=Sacramento&family=Shadows+Into+Light&family=Permanent+Marker&family=Yellowtail&family=VT323&family=Press+Start+2P&family=Special+Elite&family=Righteous&family=Alfa+Slab+One&family=Abril+Fatface&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
     <style>
@@ -34,65 +38,11 @@
         </div>
         
         <div class="control-group">
-            <button id="style-btn" class="btn btn-primary">Select Style</button>
-            <div id="style-menu" class="style-menu hidden">
-                <div class="style-option" data-style="mapbox://styles/mapbox/streets-v12">Streets</div>
-                <div class="style-option" data-style="mapbox://styles/mapbox/outdoors-v12">Outdoors</div>
-                <div class="style-option" data-style="mapbox://styles/mapbox/light-v11">Light</div>
-                <div class="style-option" data-style="mapbox://styles/mapbox/dark-v11">Dark</div>
-                <div class="style-option" data-style="mapbox://styles/mapbox/satellite-v9">Satellite</div>
-                <div class="style-option" data-style="mapbox://styles/mapbox/satellite-streets-v12">Satellite Streets</div>
-                <div class="style-option" data-style="mapbox://styles/mapbox/navigation-day-v1">Navigation Day</div>
-                <div class="style-option" data-style="mapbox://styles/mapbox/navigation-night-v1">Navigation Night</div>
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <button id="frame-btn" class="btn btn-secondary">Frame Gallery</button>
-            <div id="frame-menu" class="frame-menu hidden">
-                <div class="frame-grid">
-                    <div class="frame-item" data-frame="none">
-                        <div class="frame-preview no-frame">No Frame</div>
-                    </div>
-                    <div class="frame-item" data-frame="minimal">
-                        <div class="frame-preview minimal-frame"></div>
-                    </div>
-                    <div class="frame-item" data-frame="vintage">
-                        <div class="frame-preview vintage-frame"></div>
-                    </div>
-                    <div class="frame-item" data-frame="ornate">
-                        <div class="frame-preview ornate-frame"></div>
-                    </div>
-                    <div class="frame-item" data-frame="modern">
-                        <div class="frame-preview modern-frame"></div>
-                    </div>
-                    <div class="frame-item" data-frame="classic">
-                        <div class="frame-preview classic-frame"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <button id="text-btn" class="btn btn-secondary">Add Text</button>
-        </div>
-        
-        <div class="control-group">
             <button id="refresh-btn" class="btn btn-secondary">Refresh</button>
         </div>
         
         <div class="control-group">
             <button id="studio-btn" class="btn btn-info">Studio</button>
-        </div>
-        
-        <div class="control-group">
-            <button id="print-btn" class="btn btn-success">Print / Export</button>
-            <div id="export-menu" class="export-menu hidden">
-                <div class="export-option" data-format="pdf">Export as PDF</div>
-                <div class="export-option" data-format="jpg">Export as JPG</div>
-                <div class="export-option" data-format="png">Export as PNG</div>
-                <div class="export-option" data-format="bmp">Export as BMP</div>
-            </div>
         </div>
     </div>
     
@@ -104,16 +54,46 @@
         </button>
         
         <div class="studio-content">
-            <div class="studio-preview">
-                <div id="studio-frame-overlay" class="studio-frame-overlay"></div>
-                <div id="studio-map-container" class="studio-map-container">
-                    <div id="studio-map" class="studio-map"></div>
-                    <div class="map-resize-handle"></div>
+            <div class="studio-preview-wrapper" id="studio-preview-wrapper">
+                <div class="studio-preview" id="studio-preview">
+                    <div class="studio-canvas" id="studio-canvas">
+                        <div id="studio-grid-overlay" class="studio-grid-overlay"></div>
+                        <div id="studio-frame-overlay" class="studio-frame-overlay"></div>
+                        <div id="studio-map-container" class="studio-map-container">
+                            <div id="studio-map-frame-overlay" class="studio-map-frame-overlay"></div>
+                            <div id="studio-map" class="studio-map"></div>
+                            <div class="map-resize-handle map-resize-handle-corner"></div>
+                            <div class="map-resize-handle map-resize-handle-top"></div>
+                            <div class="map-resize-handle map-resize-handle-right"></div>
+                            <div class="map-resize-handle map-resize-handle-bottom"></div>
+                            <div class="map-resize-handle map-resize-handle-left"></div>
+                        </div>
+                        <!-- Individually draggable text elements -->
+                        <div id="studio-city-name" class="studio-text-draggable" contenteditable="true" data-type="city-name"></div>
+                        <div id="studio-state-name" class="studio-text-draggable" contenteditable="true" data-type="state-name"></div>
+                        <div id="studio-coordinates" class="studio-text-draggable" contenteditable="true" data-type="coordinates"></div>
+                    </div>
                 </div>
-                <div id="studio-city-info" class="studio-city-info">
-                    <div id="studio-city-name" class="studio-text-editable" contenteditable="true" data-type="city-name"></div>
-                    <div id="studio-state-name" class="studio-text-editable" contenteditable="true" data-type="state-name"></div>
-                    <div id="studio-coordinates" class="studio-text-editable" contenteditable="true" data-type="coordinates"></div>
+                <!-- Zoom Controls -->
+                <div class="zoom-controls" id="zoom-controls">
+                    <button id="zoom-out-btn" class="zoom-btn" title="Zoom Out (-)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            <line x1="8" y1="11" x2="14" y2="11"/>
+                        </svg>
+                    </button>
+                    <div class="zoom-level" id="zoom-level">100%</div>
+                    <button id="zoom-in-btn" class="zoom-btn" title="Zoom In (+)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            <line x1="11" y1="8" x2="11" y2="14"/>
+                            <line x1="8" y1="11" x2="14" y2="11"/>
+                        </svg>
+                    </button>
+                    <button id="zoom-fit-btn" class="zoom-btn zoom-fit" title="Fit to Screen">Fit</button>
+                    <button id="zoom-100-btn" class="zoom-btn" title="Actual Size (100%)">100%</button>
                 </div>
             </div>
             <div class="studio-controls" id="studio-controls">
@@ -123,7 +103,41 @@
                 </div>
                 
                 <div class="studio-control-section">
-                    <h3>City Name</h3>
+                    <div class="control-section-header">
+                        <h3>Map Style</h3>
+                    </div>
+                    <div class="control-row">
+                        <select id="map-style-select" class="full-width-select">
+                            <optgroup label="Standard Styles">
+                                <option value="mapbox://styles/mapbox/streets-v12">Streets</option>
+                                <option value="mapbox://styles/mapbox/outdoors-v12">Outdoors</option>
+                                <option value="mapbox://styles/mapbox/light-v11">Light</option>
+                                <option value="mapbox://styles/mapbox/dark-v11">Dark</option>
+                            </optgroup>
+                            <optgroup label="Satellite">
+                                <option value="mapbox://styles/mapbox/satellite-v9">Satellite</option>
+                                <option value="mapbox://styles/mapbox/satellite-streets-v12">Satellite Streets</option>
+                            </optgroup>
+                            <optgroup label="Artistic & Minimal">
+                                <option value="mapbox://styles/mapbox/navigation-day-v1">Navigation Day</option>
+                                <option value="mapbox://styles/mapbox/navigation-night-v1">Navigation Night</option>
+                            </optgroup>
+                            <optgroup label="Minimal">
+                                <option value="mapbox://styles/mapbox/standard">Standard</option>
+                                <option value="mapbox://styles/mapbox/standard-satellite">Standard Satellite</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="studio-control-section">
+                    <div class="control-section-header">
+                        <h3>City Name</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle-city-name" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                     <div class="control-row">
                         <label>Size:</label>
                         <input type="range" id="city-size" min="24" max="120" value="72">
@@ -132,12 +146,74 @@
                     <div class="control-row">
                         <label>Font:</label>
                         <select id="city-font">
-                            <option value="Arial">Arial</option>
-                            <option value="Times New Roman">Times New Roman</option>
-                            <option value="Courier New">Courier New</option>
-                            <option value="Georgia">Georgia</option>
-                            <option value="Verdana">Verdana</option>
-                            <option value="Helvetica">Helvetica</option>
+                            <optgroup label="Clean & Modern (Sans Serif)">
+                                <option value="Roboto">Roboto</option>
+                                <option value="Open Sans">Open Sans</option>
+                                <option value="Montserrat">Montserrat</option>
+                                <option value="Lato">Lato</option>
+                                <option value="Poppins">Poppins</option>
+                                <option value="Raleway">Raleway</option>
+                                <option value="Nunito">Nunito</option>
+                                <option value="Source Sans Pro">Source Sans Pro</option>
+                                <option value="Inter">Inter</option>
+                                <option value="Quicksand">Quicksand</option>
+                                <option value="Work Sans">Work Sans</option>
+                                <option value="Rubik">Rubik</option>
+                                <option value="Ubuntu">Ubuntu</option>
+                            </optgroup>
+                            <optgroup label="Bold & Impactful (Display)">
+                                <option value="Bebas Neue">Bebas Neue</option>
+                                <option value="Oswald">Oswald</option>
+                                <option value="Anton">Anton</option>
+                                <option value="Impact">Impact</option>
+                                <option value="Bangers">Bangers</option>
+                                <option value="Lilita One">Lilita One</option>
+                                <option value="Luckiest Guy">Luckiest Guy</option>
+                                <option value="Ultra">Ultra</option>
+                                <option value="Paytone One">Paytone One</option>
+                                <option value="Francois One">Francois One</option>
+                            </optgroup>
+                            <optgroup label="Elegant & Classic (Serif)">
+                                <option value="Playfair Display">Playfair Display</option>
+                                <option value="Merriweather">Merriweather</option>
+                                <option value="Lora">Lora</option>
+                                <option value="Libre Baskerville">Libre Baskerville</option>
+                                <option value="Roboto Slab">Roboto Slab</option>
+                                <option value="Arvo">Arvo</option>
+                                <option value="Bitter">Bitter</option>
+                                <option value="Cinzel">Cinzel</option>
+                                <option value="Crimson Text">Crimson Text</option>
+                                <option value="PT Serif">PT Serif</option>
+                            </optgroup>
+                            <optgroup label="Handwritten & Script">
+                                <option value="Pacifico">Pacifico</option>
+                                <option value="Lobster">Lobster</option>
+                                <option value="Dancing Script">Dancing Script</option>
+                                <option value="Great Vibes">Great Vibes</option>
+                                <option value="Caveat">Caveat</option>
+                                <option value="Satisfy">Satisfy</option>
+                                <option value="Cookie">Cookie</option>
+                                <option value="Sacramento">Sacramento</option>
+                                <option value="Shadows Into Light">Shadows Into Light</option>
+                                <option value="Permanent Marker">Permanent Marker</option>
+                                <option value="Yellowtail">Yellowtail</option>
+                            </optgroup>
+                            <optgroup label="Retro & Niche">
+                                <option value="VT323">VT323</option>
+                                <option value="Press Start 2P">Press Start 2P</option>
+                                <option value="Special Elite">Special Elite</option>
+                                <option value="Righteous">Righteous</option>
+                                <option value="Alfa Slab One">Alfa Slab One</option>
+                                <option value="Abril Fatface">Abril Fatface</option>
+                            </optgroup>
+                            <optgroup label="System Fonts">
+                                <option value="Arial">Arial</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Verdana">Verdana</option>
+                                <option value="Helvetica">Helvetica</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div class="control-row">
@@ -147,7 +223,13 @@
                 </div>
                 
                 <div class="studio-control-section">
-                    <h3>State Name</h3>
+                    <div class="control-section-header">
+                        <h3>State Name</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle-state-name" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                     <div class="control-row">
                         <label>Size:</label>
                         <input type="range" id="state-size" min="16" max="60" value="32">
@@ -156,12 +238,74 @@
                     <div class="control-row">
                         <label>Font:</label>
                         <select id="state-font">
-                            <option value="Arial">Arial</option>
-                            <option value="Times New Roman">Times New Roman</option>
-                            <option value="Courier New">Courier New</option>
-                            <option value="Georgia">Georgia</option>
-                            <option value="Verdana">Verdana</option>
-                            <option value="Helvetica">Helvetica</option>
+                            <optgroup label="Clean & Modern (Sans Serif)">
+                                <option value="Roboto">Roboto</option>
+                                <option value="Open Sans">Open Sans</option>
+                                <option value="Montserrat">Montserrat</option>
+                                <option value="Lato">Lato</option>
+                                <option value="Poppins">Poppins</option>
+                                <option value="Raleway">Raleway</option>
+                                <option value="Nunito">Nunito</option>
+                                <option value="Source Sans Pro">Source Sans Pro</option>
+                                <option value="Inter">Inter</option>
+                                <option value="Quicksand">Quicksand</option>
+                                <option value="Work Sans">Work Sans</option>
+                                <option value="Rubik">Rubik</option>
+                                <option value="Ubuntu">Ubuntu</option>
+                            </optgroup>
+                            <optgroup label="Bold & Impactful (Display)">
+                                <option value="Bebas Neue">Bebas Neue</option>
+                                <option value="Oswald">Oswald</option>
+                                <option value="Anton">Anton</option>
+                                <option value="Impact">Impact</option>
+                                <option value="Bangers">Bangers</option>
+                                <option value="Lilita One">Lilita One</option>
+                                <option value="Luckiest Guy">Luckiest Guy</option>
+                                <option value="Ultra">Ultra</option>
+                                <option value="Paytone One">Paytone One</option>
+                                <option value="Francois One">Francois One</option>
+                            </optgroup>
+                            <optgroup label="Elegant & Classic (Serif)">
+                                <option value="Playfair Display">Playfair Display</option>
+                                <option value="Merriweather">Merriweather</option>
+                                <option value="Lora">Lora</option>
+                                <option value="Libre Baskerville">Libre Baskerville</option>
+                                <option value="Roboto Slab">Roboto Slab</option>
+                                <option value="Arvo">Arvo</option>
+                                <option value="Bitter">Bitter</option>
+                                <option value="Cinzel">Cinzel</option>
+                                <option value="Crimson Text">Crimson Text</option>
+                                <option value="PT Serif">PT Serif</option>
+                            </optgroup>
+                            <optgroup label="Handwritten & Script">
+                                <option value="Pacifico">Pacifico</option>
+                                <option value="Lobster">Lobster</option>
+                                <option value="Dancing Script">Dancing Script</option>
+                                <option value="Great Vibes">Great Vibes</option>
+                                <option value="Caveat">Caveat</option>
+                                <option value="Satisfy">Satisfy</option>
+                                <option value="Cookie">Cookie</option>
+                                <option value="Sacramento">Sacramento</option>
+                                <option value="Shadows Into Light">Shadows Into Light</option>
+                                <option value="Permanent Marker">Permanent Marker</option>
+                                <option value="Yellowtail">Yellowtail</option>
+                            </optgroup>
+                            <optgroup label="Retro & Niche">
+                                <option value="VT323">VT323</option>
+                                <option value="Press Start 2P">Press Start 2P</option>
+                                <option value="Special Elite">Special Elite</option>
+                                <option value="Righteous">Righteous</option>
+                                <option value="Alfa Slab One">Alfa Slab One</option>
+                                <option value="Abril Fatface">Abril Fatface</option>
+                            </optgroup>
+                            <optgroup label="System Fonts">
+                                <option value="Arial">Arial</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Verdana">Verdana</option>
+                                <option value="Helvetica">Helvetica</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div class="control-row">
@@ -171,7 +315,13 @@
                 </div>
                 
                 <div class="studio-control-section">
-                    <h3>Coordinates</h3>
+                    <div class="control-section-header">
+                        <h3>Coordinates</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle-coordinates" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                     <div class="control-row">
                         <label>Size:</label>
                         <input type="range" id="coord-size" min="12" max="40" value="20">
@@ -180,12 +330,74 @@
                     <div class="control-row">
                         <label>Font:</label>
                         <select id="coord-font">
-                            <option value="Arial">Arial</option>
-                            <option value="Times New Roman">Times New Roman</option>
-                            <option value="Courier New">Courier New</option>
-                            <option value="Georgia">Georgia</option>
-                            <option value="Verdana">Verdana</option>
-                            <option value="Helvetica">Helvetica</option>
+                            <optgroup label="Clean & Modern (Sans Serif)">
+                                <option value="Roboto">Roboto</option>
+                                <option value="Open Sans">Open Sans</option>
+                                <option value="Montserrat">Montserrat</option>
+                                <option value="Lato">Lato</option>
+                                <option value="Poppins">Poppins</option>
+                                <option value="Raleway">Raleway</option>
+                                <option value="Nunito">Nunito</option>
+                                <option value="Source Sans Pro">Source Sans Pro</option>
+                                <option value="Inter">Inter</option>
+                                <option value="Quicksand">Quicksand</option>
+                                <option value="Work Sans">Work Sans</option>
+                                <option value="Rubik">Rubik</option>
+                                <option value="Ubuntu">Ubuntu</option>
+                            </optgroup>
+                            <optgroup label="Bold & Impactful (Display)">
+                                <option value="Bebas Neue">Bebas Neue</option>
+                                <option value="Oswald">Oswald</option>
+                                <option value="Anton">Anton</option>
+                                <option value="Impact">Impact</option>
+                                <option value="Bangers">Bangers</option>
+                                <option value="Lilita One">Lilita One</option>
+                                <option value="Luckiest Guy">Luckiest Guy</option>
+                                <option value="Ultra">Ultra</option>
+                                <option value="Paytone One">Paytone One</option>
+                                <option value="Francois One">Francois One</option>
+                            </optgroup>
+                            <optgroup label="Elegant & Classic (Serif)">
+                                <option value="Playfair Display">Playfair Display</option>
+                                <option value="Merriweather">Merriweather</option>
+                                <option value="Lora">Lora</option>
+                                <option value="Libre Baskerville">Libre Baskerville</option>
+                                <option value="Roboto Slab">Roboto Slab</option>
+                                <option value="Arvo">Arvo</option>
+                                <option value="Bitter">Bitter</option>
+                                <option value="Cinzel">Cinzel</option>
+                                <option value="Crimson Text">Crimson Text</option>
+                                <option value="PT Serif">PT Serif</option>
+                            </optgroup>
+                            <optgroup label="Handwritten & Script">
+                                <option value="Pacifico">Pacifico</option>
+                                <option value="Lobster">Lobster</option>
+                                <option value="Dancing Script">Dancing Script</option>
+                                <option value="Great Vibes">Great Vibes</option>
+                                <option value="Caveat">Caveat</option>
+                                <option value="Satisfy">Satisfy</option>
+                                <option value="Cookie">Cookie</option>
+                                <option value="Sacramento">Sacramento</option>
+                                <option value="Shadows Into Light">Shadows Into Light</option>
+                                <option value="Permanent Marker">Permanent Marker</option>
+                                <option value="Yellowtail">Yellowtail</option>
+                            </optgroup>
+                            <optgroup label="Retro & Niche">
+                                <option value="VT323">VT323</option>
+                                <option value="Press Start 2P">Press Start 2P</option>
+                                <option value="Special Elite">Special Elite</option>
+                                <option value="Righteous">Righteous</option>
+                                <option value="Alfa Slab One">Alfa Slab One</option>
+                                <option value="Abril Fatface">Abril Fatface</option>
+                            </optgroup>
+                            <optgroup label="System Fonts">
+                                <option value="Arial">Arial</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Verdana">Verdana</option>
+                                <option value="Helvetica">Helvetica</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div class="control-row">
@@ -195,14 +407,205 @@
                 </div>
                 
                 <div class="studio-control-section">
-                    <h3>Frame</h3>
-                    <div class="frame-selector-studio">
-                        <button class="frame-btn-studio" data-frame="none">None</button>
-                        <button class="frame-btn-studio" data-frame="minimal">Minimal</button>
-                        <button class="frame-btn-studio" data-frame="vintage">Vintage</button>
-                        <button class="frame-btn-studio" data-frame="ornate">Ornate</button>
-                        <button class="frame-btn-studio" data-frame="modern">Modern</button>
-                        <button class="frame-btn-studio" data-frame="classic">Classic</button>
+                    <h3>Poster Size</h3>
+                    <div class="control-row">
+                        <label>Orientation:</label>
+                        <div class="orientation-toggle">
+                            <button type="button" id="orientation-portrait" class="orientation-btn active" title="Portrait">
+                                <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor">
+                                    <rect x="1" y="1" width="14" height="18" rx="1" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                            <button type="button" id="orientation-landscape" class="orientation-btn" title="Landscape">
+                                <svg width="20" height="16" viewBox="0 0 20 16" fill="currentColor">
+                                    <rect x="1" y="1" width="18" height="14" rx="1" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <label>Size:</label>
+                        <select id="poster-size-select">
+                            <optgroup label="2:3 Ratio (Recommended)">
+                                <option value="8x12">8" × 12" (Small)</option>
+                                <option value="12x18">12" × 18" (Mini Poster)</option>
+                                <option value="16x24">16" × 24" (Medium)</option>
+                                <option value="20x30">20" × 30" (Large)</option>
+                                <option value="24x36" selected>24" × 36" (Standard)</option>
+                                <option value="30x45">30" × 45" (Extra Large)</option>
+                            </optgroup>
+                            <optgroup label="Other Common Sizes">
+                                <option value="11x14">11" × 14" (4:5 Ratio)</option>
+                                <option value="18x24">18" × 24" (3:4 Ratio)</option>
+                                <option value="27x40">27" × 40" (Movie Poster)</option>
+                            </optgroup>
+                            <optgroup label="ISO Standard (A Series)">
+                                <option value="A4">A4 (210 × 297mm)</option>
+                                <option value="A3">A3 (297 × 420mm)</option>
+                                <option value="A2">A2 (420 × 594mm)</option>
+                                <option value="A1">A1 (594 × 841mm)</option>
+                                <option value="A0">A0 (841 × 1189mm)</option>
+                            </optgroup>
+                            <optgroup label="Custom">
+                                <option value="custom">Custom Size...</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div id="custom-size-inputs" class="custom-size-inputs" style="display: none;">
+                        <div class="control-row">
+                            <label>Width:</label>
+                            <input type="number" id="custom-width" value="24" min="1" max="100" step="0.5">
+                            <span class="unit-label">in</span>
+                        </div>
+                        <div class="control-row">
+                            <label>Height:</label>
+                            <input type="number" id="custom-height" value="36" min="1" max="100" step="0.5">
+                            <span class="unit-label">in</span>
+                        </div>
+                    </div>
+                    <div class="poster-size-info">
+                        <span id="poster-dimensions">24" × 36"</span>
+                        <span id="poster-ratio">(2:3)</span>
+                    </div>
+                </div>
+                
+                <div class="studio-control-section">
+                    <h3>Background</h3>
+                    <div class="control-row">
+                        <label>Color:</label>
+                        <input type="color" id="background-color" value="#faf8f3">
+                    </div>
+                </div>
+                
+                <div class="studio-control-section">
+                    <div class="control-section-header">
+                        <h3>Grid & Guides</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle-grid">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="control-row">
+                        <label>Grid Size:</label>
+                        <select id="grid-size-select">
+                            <option value="25">0.25" (¼ inch)</option>
+                            <option value="50" selected>0.5" (½ inch)</option>
+                            <option value="100">1" (1 inch)</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="snap-to-grid" checked>
+                            <span>Snap to Grid</span>
+                        </label>
+                    </div>
+                    <div class="control-row">
+                        <label>Grid Color:</label>
+                        <input type="color" id="grid-color" value="#cccccc">
+                    </div>
+                </div>
+                
+                <div class="studio-control-section">
+                    <div class="control-section-header">
+                        <h3>Poster Frame</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle-frame" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="control-row">
+                        <label>Style:</label>
+                        <select id="frame-select">
+                            <option value="none">None</option>
+                            <option value="minimal">Minimal</option>
+                            <option value="vintage">Vintage</option>
+                            <option value="ornate">Ornate</option>
+                            <option value="modern">Modern</option>
+                            <option value="classic">Classic</option>
+                            <option value="vintage-paper">Vintage Paper</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label>Color:</label>
+                        <input type="color" id="poster-frame-color" value="#654321">
+                    </div>
+                    <div class="control-row">
+                        <label>Opacity:</label>
+                        <input type="range" id="frame-opacity" min="0" max="100" value="100">
+                        <span id="frame-opacity-value">100%</span>
+                    </div>
+                    <div class="control-row">
+                        <label>Thickness:</label>
+                        <input type="range" id="frame-thickness" min="10" max="150" value="50">
+                        <span id="frame-thickness-value">50px</span>
+                    </div>
+                </div>
+                
+                <div class="studio-control-section">
+                    <div class="control-section-header">
+                        <h3>Map Shape</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle-map-shape" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="control-row">
+                        <label>Shape:</label>
+                        <select id="map-shape-select">
+                            <option value="rectangle">Rectangle</option>
+                            <option value="circle">Circle</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label>Size:</label>
+                        <input type="range" id="map-shape-size" min="30" max="100" value="80">
+                        <span id="map-shape-size-value">80%</span>
+                    </div>
+                    <div class="control-row resize-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="resize-proportional" checked>
+                            <span>Proportional</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="resize-freeform">
+                            <span>Freeform</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="studio-control-section">
+                    <div class="control-section-header">
+                        <h3>Map Frame</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle-map-frame" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="control-row">
+                        <label>Style:</label>
+                        <select id="map-frame-select">
+                            <option value="none">None</option>
+                            <option value="minimal">Minimal</option>
+                            <option value="vintage">Vintage</option>
+                            <option value="ornate">Ornate</option>
+                            <option value="modern">Modern</option>
+                            <option value="classic">Classic</option>
+                            <option value="vintage-paper">Vintage Paper</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label>Color:</label>
+                        <input type="color" id="map-frame-color" value="#654321">
+                    </div>
+                    <div class="control-row">
+                        <label>Opacity:</label>
+                        <input type="range" id="map-frame-opacity" min="0" max="100" value="100">
+                        <span id="map-frame-opacity-value">100%</span>
+                    </div>
+                    <div class="control-row">
+                        <label>Thickness:</label>
+                        <input type="range" id="map-frame-thickness" min="10" max="150" value="50">
+                        <span id="map-frame-thickness-value">50px</span>
                     </div>
                 </div>
                 
